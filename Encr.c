@@ -1,95 +1,94 @@
-//Making a message Encrypter & decrypter
+// Making a message Encrypter & Decrypter
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
-void Encrypt(char *, int, int);
-void Decrypt(char *, int, int);
+void Encrypt(char *text, int len, int k);
+void Decrypt(char *text, int len, int k);
 
-int main(){
-    char * text[500];
-    int key, i, len, choice;
+int main() {
+    char *text = (char *)malloc(500 * sizeof(char));
+    int key, len, choice;
+
+    if (text == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return 1;
+    }
 
     printf("MAIN MENU\n");
     printf("Message Encrypter & Decrypter\n");
     printf("1. Encrypt a message\n");
     printf("2. Decrypt a message\n");
-    printf("3. Exit\n");    
+    printf("3. Exit\n");
     scanf("%d", &choice);
+    while ((getchar()) != '\n'); // Clear input buffer
 
-    * text = (int *)malloc(500 * sizeof(int));
+    switch (choice) {
+        case 1:
+            printf("Enter a message: ");
+            fgets(text, 500, stdin);
+            printf("Enter your key: ");
+            scanf("%d", &key);
 
-    if(choice == 1){
-        printf("Enter a message: ");
-        fgets(text, sizeof(text), stdin);
+            len = strlen(text);
+            Encrypt(text, len, key);
+            printf("Encrypted message: %s\n", text);
+            break;
 
-        printf("Enter your key: ");
-        scanf("%d, &key");
+        case 2:
+            printf("Enter a message: ");
+            fgets(text, 500, stdin);
+            printf("Enter your key: ");
+            scanf("%d", &key);
 
-        len = strlen(text);
+            len = strlen(text);
+            Decrypt(text, len, key);
+            printf("Decrypted message: %s\n", text);
+            break;
 
-       Encrypt(text, len, key);
-    }    
-    else if(choice == 2){
-        printf("Enter a message: ");
-        fgets(text, 500, stdin);
+        case 3:
+            printf("Thanks for using the program\n");
+            free(text);
+            exit(0);
 
-        printf("Enter your key: ");
-        scanf("%d, &key");
-
-        len = strlen(text);
-
-        Decrypt(text, len, key);
-    }
-    else if(choice == 3){
-        printf("Thanks for using the program\n");
-        exit(0);
-    }
-    else{
-        printf("Invalid choice\n");
-        printf("Please try again\n");
+        default:
+            printf("Invalid choice\n");
+            printf("Please try again\n");
+            break;
     }
 
     free(text);
-
     return 0;
 }
 
-void Encrypt(char *text, int len, int k){
-    int i;
-    for(i = 0; i < len; i++){
-        if(*(text + i) >= 'a' &&*(text + i) <= 'z'){
+void Encrypt(char *text, int len, int k) {
+    for (int i = 0; i < len; i++) {
+        if (text[i] >= 'a' && text[i] <= 'z') {
             text[i] = text[i] + k;
-            if(text[i] > 'z'){
+            if (text[i] > 'z') {
                 text[i] = text[i] - 'z' + 'a' - 1;
             }
-        }
-        else if(*(text + i) >= 'A' && *(text + i) <= 'Z'){
+        } else if (text[i] >= 'A' && text[i] <= 'Z') {
             text[i] = text[i] + k;
-            if(text[i] > 'Z'){
+            if (text[i] > 'Z') {
                 text[i] = text[i] - 'Z' + 'A' - 1;
             }
         }
-        printf("%c", text[i]);
     }
-    printf("Encrypted message: %s\n", text);
 }
 
-void Decrypt(char* text, int len, int k){
-    int i;
-    for(i = 0; i < len; i++){
-        if(*(text + i) >= 'a' && *(text + i) <= 'z'){
+void Decrypt(char *text, int len, int k) {
+    for (int i = 0; i < len; i++) {
+        if (text[i] >= 'a' && text[i] <= 'z') {
             text[i] = text[i] - k;
-            if(text[i] < 'a'){
+            if (text[i] < 'a') {
                 text[i] = text[i] + 'z' - 'a' + 1;
             }
-        }
-        else if(*(text + i) >= 'A' && *(text + i) <= 'Z'){
+        } else if (text[i] >= 'A' && text[i] <= 'Z') {
             text[i] = text[i] - k;
-            if(text[i] < 'A'){
+            if (text[i] < 'A') {
                 text[i] = text[i] + 'Z' - 'A' + 1;
             }
         }
-        printf("%c", text[i]);
     }
 }
