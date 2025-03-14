@@ -12,10 +12,15 @@ void power(double, int);
 void factorial(int);
 void SquareRoot(void);
 void Trigonometry(void);
-
+void Unit_Conversion(void);
+void Length_Conversion(void);
+void Weight_Conversion(void);
+void Temp_Conversion(void);
 double to_radians(double);
 
 #define M_PI 3.14159265358979323846
+#define RESET "\033[0m"
+#define UNDERLINE "\033[1;21m"
 
 int main(){
     double operand1, operand2;
@@ -82,10 +87,15 @@ int main(){
             break;
         }
         case 9:{
+            Unit_Conversion();
+            break;
+        }
+        case 10:{
             printf("Exiting the program.");
             printf("\nThanks for using the calculator.\n");
             printf("Developed by: Samrat Parajuli");
             printf("\n\t\t\t\t\tTHE END\n");
+            printf(RESET);
             exit(0);
         }
         default:
@@ -99,7 +109,7 @@ int main(){
 //function to print main menu
 int PrintMenu(){
     int choice;
-    printf("\n\t\t\t\t\tSimple Calculator\n");    //title
+    printf(UNDERLINE"\n\t\t\t\t\tSimple Calculator\n");    //title
     printf("What do you wish to do?\n");
     printf("1.Addition\n");
     printf("2.Subtraction\n");  
@@ -109,7 +119,8 @@ int PrintMenu(){
     printf("6.Factorial\n");
     printf("7.Square Root\n");
     printf("8.Trigonometric Calculation\n");
-    printf("9.Exit\n");
+    printf("9.Unit Conversion\n");
+    printf("10.Exit\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
     return choice;
@@ -203,4 +214,99 @@ void Trigonometry(){
 double to_radians(double num){
     double fun_result = num * M_PI / 180;
     return fun_result;
+}
+
+void Unit_Conversion(void){
+    int choice;
+
+    printf("Welcome to Unit Conversion: \nWhat type of unit conversion do you want to do?\n");
+    printf("1. Length\n");
+    printf("2. Weight\n");
+    printf("3. Temperature\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice){
+        case 1:{
+            Length_Conversion();
+            break;
+        }
+
+        case 2:{
+            Weight_Conversion();
+            break;
+        }
+
+        case 3:{
+            Temp_Conversion();
+            break;
+        }
+
+        default:{
+            break;
+        }
+    }
+}
+
+void Length_Conversion(void){
+    int choice;
+    double value;
+    
+    printf("\nLength Converter\n");
+    printf("1. Meters to Kilometers\n");
+    printf("2. Kilometers to Meters\n");
+    printf("3. Inches to Centimeters\n");
+    printf("4. Centimeters to Inches\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+    
+    printf("Enter value: ");
+    scanf("%lf", &value);
+    
+    switch (choice) {
+        case 1: printf("%.2lf meters = %.2lf kilometers\n", value, value / 1000); break;
+        case 2: printf("%.2lf kilometers = %.2lf meters\n", value, value * 1000); break;
+        case 3: printf("%.2lf inches = %.2lf centimeters\n", value, value * 2.54); break;
+        case 4: printf("%.2lf centimeters = %.2lf inches\n", value, value / 2.54); break;
+        default: printf("Invalid choice.\n");
+    }
+}
+
+void Weight_Conversion(void){
+        int choice;
+        double value;
+        
+        printf("\nWeight Converter\n");
+        printf("1. Kilograms to Pounds\n");
+        printf("2. Pounds to Kilograms\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        
+        printf("Enter value: ");
+        scanf("%lf", &value);
+        
+        switch (choice) {
+            case 1: printf("%.2lf kilograms = %.2lf pounds\n", value, value * 2.20462); break;
+            case 2: printf("%.2lf pounds = %.2lf kilograms\n", value, value / 2.20462); break;
+            default: printf("Invalid choice.\n");
+        }
+}
+void Temp_Conversion(void){
+    int choice;
+    double value;
+    
+    printf("\nTemperature Converter\n");
+    printf("1. Celsius to Fahrenheit\n");
+    printf("2. Fahrenheit to Celsius\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+    
+    printf("Enter value: ");
+    scanf("%lf", &value);
+    
+    switch (choice) {
+        case 1: printf("%.2lf Celsius = %.2lf Fahrenheit\n", value, (value * 9/5) + 32); break;
+        case 2: printf("%.2lf Fahrenheit = %.2lf Celsius\n", value, (value - 32) * 5/9); break;
+        default: printf("Invalid choice.\n");
+    }
 }
