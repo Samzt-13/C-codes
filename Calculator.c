@@ -17,6 +17,9 @@ void Length_Conversion(void);
 void Weight_Conversion(void);
 void Temp_Conversion(void);
 double to_radians(double);
+void Check_Palindrome(void);
+void Print_Fibonacci(void);
+void fib(int);
 
 #define M_PI 3.14159265358979323846
 #define RESET "\033[0m"
@@ -90,7 +93,18 @@ int main(){
             Unit_Conversion();
             break;
         }
+
         case 10:{
+            Check_Palindrome();
+            break;
+        }
+
+        case 11:{
+            Print_Fibonacci();
+            break;
+        }
+
+        case 12:{
             printf("Exiting the program.");
             printf("\nThanks for using the calculator.\n");
             printf("Developed by: Samrat Parajuli");
@@ -109,7 +123,7 @@ int main(){
 //function to print main menu
 int PrintMenu(){
     int choice;
-    printf(UNDERLINE"\n\t\t\t\t\tSimple Calculator\n");    //title
+    printf(UNDERLINE"\n\t\t\t\t\tBasic Calculator\n");    //title
     printf("What do you wish to do?\n");
     printf("1.Addition\n");
     printf("2.Subtraction\n");  
@@ -120,7 +134,9 @@ int PrintMenu(){
     printf("7.Square Root\n");
     printf("8.Trigonometric Calculation\n");
     printf("9.Unit Conversion\n");
-    printf("10.Exit\n");
+    printf("10.Palindrome\n");
+    printf("11.Fibonacci\n");
+    printf("12.Exit\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
     return choice;
@@ -308,5 +324,62 @@ void Temp_Conversion(void){
         case 1: printf("%.2lf Celsius = %.2lf Fahrenheit\n", value, (value * 9/5) + 32); break;
         case 2: printf("%.2lf Fahrenheit = %.2lf Celsius\n", value, (value - 32) * 5/9); break;
         default: printf("Invalid choice.\n");
+    }
+}
+
+void Check_Palindrome(void){
+        int num, temp, reverse = 0;
+
+        printf("Enter a number: ");
+        scanf("%d", &num);
+        temp = num;
+        while(temp != 0){
+            reverse = (reverse * 10) + temp % 10;
+            temp = temp / 10;
+        }
+        if(reverse == num){
+            printf("%d is a palindrome number\n", num);
+        }
+        else{
+            printf("%d is not a palindrome number\n", num);
+        }
+}
+
+void Print_Fibonacci(void){
+        int num, fibo;
+        Start:
+        printf("Enter the Fibonacci print range: ");
+        scanf("%d", &num);
+        if(num < 1){
+            printf("Invalid number!!!\n");
+            goto Start;
+        }
+        else if(num == 1){
+            printf("0");
+        }
+        else if(num == 2){
+            printf("0\t1");
+        }
+        else{
+            fib(num);
+        }
+}
+
+void fib(int num){
+    int num1 = 0;
+    int num2 = 1;
+    for(int i = 0; i <= num; i++){
+    if(i >2){
+    int current = num1 + num2; 
+    num1 = num2;
+    num2 = current;
+    printf("%d\t", current);
+    }
+    else if(i == 1){
+        printf("%d\t", num1);
+    }
+    else if(i == 2){
+        printf("%d\t",num2);
+    }
     }
 }
