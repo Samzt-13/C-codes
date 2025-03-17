@@ -1,10 +1,10 @@
-#include <stdio.h>
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <stdlib.h>
+#include <stdio.h>  //for printf() & scanf() functions
+#define _USE_MATH_DEFINES //to use M_PI function
+#include <math.h>  //for advanced mathematic calculation
+#include <stdlib.h>  //for functions like exit(0)
 
-int PrintMenu();
-
+int PrintMenu();  //main menu for the UI
+//all the function definitions here
 void Basic_Operations(void);
 void Trigonometric_Calculations(void);
 void Advanced_Calculations(void);
@@ -24,9 +24,10 @@ void Temp_Conversion(void);
 void Check_Palindrome(void);
 void Print_Fibonacci(void);
 void fib(int);
+//these two for the Underline on the code & reseting it to normal
 #define RESET "\033[0m"
 #define UNDERLINE "\033[1;21m"
-
+//main part of the function
 int main(){
     int operator = 1;
     while(1){
@@ -34,30 +35,31 @@ int main(){
     //switch statement for operator
     switch(operator){
         case 1:{
-            Basic_Operations();
+            Basic_Operations(); //for basic calculations
             break;
         }
 
         case 2:{
-            Trigonometric_Calculations();
+            Trigonometric_Calculations();  //for trigonometric calculations
             break;
         }
 
         case 3:{
-            Advanced_Calculations();
+            Advanced_Calculations();  //for advanced calculations
             break;
         }
 
         case 4:{
+            //messages for exiting the program 
             printf("Exiting the program.");
             printf("\nThanks for using the calculator.\n");
             printf("Developed by: Samrat Parajuli");
             printf("\n\t\t\t\t\tTHE END\n");
             printf(RESET);
-            exit(0);
+            exit(0);  //exits from the while loop. Lies in <stdlib.h> header file
         }
         default:{
-            fprintf(stderr, "Error!!!Invalid operator.\n");
+            fprintf(stderr, "Error!!!Invalid operator.\n");  //shows the wrong user input
             continue;            //default case
     }
     }
@@ -76,15 +78,15 @@ int PrintMenu(){
     printf("4.Exit\n");
     printf("Enter your choice: ");
     if((scanf("%d", &choice)) < 1){
-        printf("Inavlid Operation!!!!");
-        exit(0);
+        printf("Inavlid Operation!!!!");  //handling errors if user input something different from number
+        exit(0);  //directly exits the while loop in the main function
     }
 
     return choice;
 }
 void Basic_Operations(void){
-    int Basic_choice, power_call, facto_user;
-    double operand1, operand2;//define power_call for power & facto_user to get factorial from user as an integer
+    int Basic_choice, power_call, facto_user;  //define power_call for power & facto_user to get factorial from user as an integer
+    double operand1, operand2;
     printf("\t\t\t\t\tBASIC CALCULATION\n");
     printf("1.Addition: \n");
     printf("2.Subtraction: \n");
@@ -95,7 +97,7 @@ void Basic_Operations(void){
     printf("7.Square Root: \n");
     printf("Choose one operation: ");
     if((scanf("%d", &Basic_choice)) < 1){
-        printf("Inavlid Operation!!!!");
+        printf("Inavlid Operation!!!!");  //same as before (just handling user input errors)
         exit(0);
     }
     switch(Basic_choice){
@@ -153,26 +155,26 @@ void Basic_Operations(void){
         }
 
         default:{
-            printf("Invalid Operation!!! ");
-            exit(0);
+            fprintf(stderr, "Invalid Operation!!! ");
+            exit(0);  //exits the while loop for invalid input
         }
     }
 }
-
+//for trigonometric calculations
 void Trigonometric_Calculations(void){
-    printf("\t\t\t\t\tTRIGONOMETRIC CALCULATION\n");
+    printf("\t\t\t\t\tTRIGONOMETRIC CALCULATION\n");  //just some UI, not compulsory
     Trigonometry();
 }
 
 void Advanced_Calculations(){
-    int Advance_Call;
-    printf("\t\t\t\t\tADVANCED CALCULATION\n");
+    int Advance_Call;  //for the user choice input
+    printf("\t\t\t\t\tADVANCED CALCULATION\n"); //just some UI, not compulsory
     printf("1.Unit Conversion: \n");
     printf("2.Palindrome: \n");
     printf("3.Fibonacci: \n");;
     printf("Choose one operation: ");
     if((scanf("%d", &Advance_Call)) < 1){
-        printf("Inavlid Operation!!!!");
+        fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
         exit(0);
     }
     switch(Advance_Call){
@@ -193,15 +195,10 @@ void Advanced_Calculations(){
 
         default :{
             printf("Invalid Operation!!! ");
-            exit(0);
+            exit(0);  //exists the while loop.
         }
     }
 }
-/*
-  9.Unit Conversion
-  10.Palindrome
-  11.Fibonacci
-*/
 //functions for each operator
 void Sum(double a, double b){
     double Sum = a + b;
@@ -227,13 +224,13 @@ void power(double a, int b){
 void factorial(int a){
     double fact = 1;
     if (a < 0) {
-        printf("Error! Factorial of a negative number doesn't exist.\n");
+        fprintf(stderr, "Error! Factorial of a negative number doesn't exist.\n");  //user input error handling
         return;
     }
     for(int i = 1; i <= a; i++){
-        fact *= i;
+        fact *= i;  //multiplying it until its done with a for loop
     }
-    printf("%d! = %.2lf\n", a, fact);
+    printf("%d! = %.2lf\n", a, fact);  //prints the factorial
 }
 
 void SquareRoot(){
@@ -248,15 +245,17 @@ void SquareRoot(){
 void Trigonometry(){
     int choice;
     double angle, result;
-    printf("What type of Trigonometric Calculation do you want to do?\n");
+    printf("What type of Trigonometric Calculation do you want to do?\n");  //for some trigonometric calculations
     printf("1.Sine\n");
     printf("2.Cosine\n");
     printf("3.Tangent\n");
     printf("Enter your choice: ");
     scanf("%d", &choice);
-
     printf("Enter your angle: ");
-    scanf("%lf", &angle);
+    if((scanf("%d", &choice)) < 1){
+        fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
+        exit(0);
+    }
     switch(choice){
         case 1:{
             result = sin(to_radians(angle));
@@ -287,7 +286,7 @@ void Trigonometry(){
         }
     }
 }
-
+//changes the angle to radian for <math.h> function to work
 double to_radians(double num){
     double fun_result = num * M_PI / 180;
     return fun_result;
@@ -295,12 +294,15 @@ double to_radians(double num){
 void Unit_Conversion(void){
     int choice;
 
-    printf("Welcome to Unit Conversion: \nWhat type of unit conversion do you want to do?\n");
+    printf("Welcome to Unit Conversion: \nWhat type of unit conversion do you want to do?\n"); //unit conversion for the user
     printf("1. Length\n");
     printf("2. Weight\n");
     printf("3. Temperature\n");
     printf("Enter your choice: ");
-    scanf("%d", &choice);
+    if((scanf("%d", &choice)) < 1){
+        fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
+        exit(0);
+    }
 
     switch (choice){
         case 1:{
@@ -341,10 +343,10 @@ void Length_Conversion(void){
     
     switch (choice) {
         case 1: printf("%.2lf meters = %.2lf kilometers\n", value, value / 1000); break;
-        case 2: printf("%.2lf kilometers = %.2lf meters\n", value, value * 1000); break;
+        case 2: printf("%.2lf kilometers = %.2lf meters\n", value, value * 1000); break;        //just some basic stuff
         case 3: printf("%.2lf inches = %.2lf centimeters\n", value, value * 2.54); break;
         case 4: printf("%.2lf centimeters = %.2lf inches\n", value, value / 2.54); break;
-        default: printf("Invalid choice.\n");
+        default: printf("Invalid choice.\n"); //handling default function
     }
 }
 
@@ -386,7 +388,7 @@ void Temp_Conversion(void){
         default: printf("Invalid choice.\n");
     }
 }
-
+//check if its palindrome.
 void Check_Palindrome(void){
         int num, temp, reverse = 0;
 
@@ -404,7 +406,7 @@ void Check_Palindrome(void){
             printf("%d is not a palindrome number\n", num);
         }
 }
-
+//to print fibonacci numbers till the user input
 void Print_Fibonacci(void){
         int num, fibo;
         Start:
@@ -420,11 +422,14 @@ void Print_Fibonacci(void){
         else if(num == 2){
             printf("0\t1");
         }
+        else if(num >= 48){  //just handling if user input is too big
+            fprintf(stderr, "Please enter smaller number: ");  //error handling
+        }
         else{
             fib(num);
         }
 }
-
+//to print fibonacci numbers
 void fib(int num){
     int num1 = 0;
     int num2 = 1;
