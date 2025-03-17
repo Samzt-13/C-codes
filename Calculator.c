@@ -5,6 +5,9 @@
 
 int PrintMenu();
 
+void Basic_Operations(void);
+void Trigonometric_Calculations(void);
+void Advanced_Calculations(void);
 void Sum(double, double);
 void Diff(double, double);
 void Mult(double, double);
@@ -13,26 +16,89 @@ void power(double, int);
 void factorial(int);
 void SquareRoot(void);
 void Trigonometry(void);
+double to_radians(double);
 void Unit_Conversion(void);
 void Length_Conversion(void);
 void Weight_Conversion(void);
 void Temp_Conversion(void);
-double to_radians(double);
 void Check_Palindrome(void);
 void Print_Fibonacci(void);
 void fib(int);
-
 #define RESET "\033[0m"
 #define UNDERLINE "\033[1;21m"
 
 int main(){
-    double operand1, operand2;
-    int power_call, facto_user; //define power_call for power & facto_user to get factorial from user as an integer
     int operator = 1;
     while(1){
     operator = PrintMenu(); //get the operator & print the menu
     //switch statement for operator
     switch(operator){
+        case 1:{
+            Basic_Operations();
+            break;
+        }
+
+        case 2:{
+            Trigonometric_Calculations();
+            break;
+        }
+
+        case 3:{
+            Advanced_Calculations();
+            break;
+        }
+
+        case 4:{
+            printf("Exiting the program.");
+            printf("\nThanks for using the calculator.\n");
+            printf("Developed by: Samrat Parajuli");
+            printf("\n\t\t\t\t\tTHE END\n");
+            printf(RESET);
+            exit(0);
+        }
+        default:{
+            fprintf(stderr, "Error!!!Invalid operator.\n");
+            continue;            //default case
+    }
+    }
+}
+    return 0;
+}
+
+//function to print main menu
+int PrintMenu(){
+    int choice;
+    printf(UNDERLINE"\n\t\t\t\t\tINTERMEDIATE LEVEL CALCULATOR\n");    //title
+    printf("What do you wish to do?\n");
+    printf("1.Basic Operations: \n");
+    printf("2.Trigonometric Operations: \n");
+    printf("3.Advanced Calculations: \n");
+    printf("4.Exit\n");
+    printf("Enter your choice: ");
+    if((scanf("%d", &choice)) < 1){
+        printf("Inavlid Operation!!!!");
+        exit(0);
+    }
+
+    return choice;
+}
+void Basic_Operations(void){
+    int Basic_choice, power_call, facto_user;
+    double operand1, operand2;//define power_call for power & facto_user to get factorial from user as an integer
+    printf("\t\t\t\t\tBASIC CALCULATION\n");
+    printf("1.Addition: \n");
+    printf("2.Subtraction: \n");
+    printf("3.Multiplication: \n");
+    printf("4.Division: \n");
+    printf("5.Power: \n");
+    printf("6.Factorial: \n");
+    printf("7.Square Root: \n");
+    printf("Choose one operation: ");
+    if((scanf("%d", &Basic_choice)) < 1){
+        printf("Inavlid Operation!!!!");
+        exit(0);
+    }
+    switch(Basic_choice){
         case 1:{
             printf("Enter two numbers: ");
             scanf("%lf %lf", &operand1, &operand2);
@@ -85,66 +151,57 @@ int main(){
             SquareRoot();
             break;
         }
-        case 8:{
-            Trigonometry();
-            break;
+
+        default:{
+            printf("Invalid Operation!!! ");
+            exit(0);
         }
-        case 9:{
+    }
+}
+
+void Trigonometric_Calculations(void){
+    printf("\t\t\t\t\tTRIGONOMETRIC CALCULATION\n");
+    Trigonometry();
+}
+
+void Advanced_Calculations(){
+    int Advance_Call;
+    printf("\t\t\t\t\tADVANCED CALCULATION\n");
+    printf("1.Unit Conversion: \n");
+    printf("2.Palindrome: \n");
+    printf("3.Fibonacci: \n");;
+    printf("Choose one operation: ");
+    if((scanf("%d", &Advance_Call)) < 1){
+        printf("Inavlid Operation!!!!");
+        exit(0);
+    }
+    switch(Advance_Call){
+        case 1:{
             Unit_Conversion();
             break;
         }
 
-        case 10:{
+        case 2:{
             Check_Palindrome();
             break;
         }
 
-        case 11:{
+        case 3:{
             Print_Fibonacci();
             break;
         }
 
-        case 12:{
-            printf("Exiting the program.");
-            printf("\nThanks for using the calculator.\n");
-            printf("Developed by: Samrat Parajuli");
-            printf("\n\t\t\t\t\tTHE END\n");
-            printf(RESET);
+        default :{
+            printf("Invalid Operation!!! ");
             exit(0);
         }
-        default:
-            fprintf(stderr, "Error!!!Invalid operator.\n");
-            continue;            //default case
     }
-    }
-    return 0;
 }
-
-//function to print main menu
-int PrintMenu(){
-    int choice;
-    printf(UNDERLINE"\n\t\t\t\t\tBasic Calculator\n");    //title
-    printf("What do you wish to do?\n");
-    printf("1.Addition\n");
-    printf("2.Subtraction\n");  
-    printf("3.Multiplication\n");
-    printf("4.Division\n"); 
-    printf("5.Power\n");
-    printf("6.Factorial\n");
-    printf("7.Square Root\n");
-    printf("8.Trigonometric Calculation\n");
-    printf("9.Unit Conversion\n");
-    printf("10.Palindrome\n");
-    printf("11.Fibonacci\n");
-    printf("12.Exit\n");
-    printf("Enter your choice: ");
-    if((scanf("%d", &choice)) < 1){
-        printf("Inavlid Operation!!!!");
-        exit(0);
-    }
-
-    return choice;
-}
+/*
+  9.Unit Conversion
+  10.Palindrome
+  11.Fibonacci
+*/
 //functions for each operator
 void Sum(double a, double b){
     double Sum = a + b;
@@ -235,7 +292,6 @@ double to_radians(double num){
     double fun_result = num * M_PI / 180;
     return fun_result;
 }
-
 void Unit_Conversion(void){
     int choice;
 
