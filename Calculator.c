@@ -456,7 +456,7 @@ void Logarithmic_Functions(void){
     printf("2.base 2\n");
     printf("3.Custom base\n");
     printf("Enter your choice: ");
-    if((scanf("%d", &choice)) == 0){
+    if((scanf("%d", &choice)) == 0){ 
         fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
         exit(0);
     }
