@@ -1,4 +1,5 @@
 #include <stdio.h>
+#define _USE_MATH_DEFINES
 #include <math.h>
 #include <stdlib.h>
 
@@ -21,7 +22,6 @@ void Check_Palindrome(void);
 void Print_Fibonacci(void);
 void fib(int);
 
-#define M_PI 3.14159265358979323846
 #define RESET "\033[0m"
 #define UNDERLINE "\033[1;21m"
 
@@ -138,7 +138,11 @@ int PrintMenu(){
     printf("11.Fibonacci\n");
     printf("12.Exit\n");
     printf("Enter your choice: ");
-    scanf("%d", &choice);
+    if((scanf("%d", &choice)) < 1){
+        printf("Inavlid Operation!!!!");
+        exit(0);
+    }
+
     return choice;
 }
 //functions for each operator
