@@ -4,7 +4,7 @@
 #include <stdlib.h>  //for functions like exit(0)
 
 int PrintMenu();  //main menu for the UI
-//all the function definitions here
+//all the function prototypes here
 void Basic_Operations(void);
 void Trigonometric_Calculations(void);
 void Advanced_Calculations(void);
@@ -23,6 +23,7 @@ void Weight_Conversion(void);
 void Temp_Conversion(void);
 void Check_Palindrome(void);
 void Print_Fibonacci(void);
+void Logarithmic_Functions(void);
 void fib(int);
 //these two for the Underline on the code & reseting it to normal
 #define RESET "\033[0m"
@@ -77,7 +78,7 @@ int PrintMenu(){
     printf("3.Advanced Calculations: \n");
     printf("4.Exit\n");
     printf("Enter your choice: ");
-    if((scanf("%d", &choice)) < 1){
+    if((scanf("%d", &choice)) == 0){
         printf("Inavlid Operation!!!!");  //handling errors if user input something different from number
         exit(0);  //directly exits the while loop in the main function
     }
@@ -96,7 +97,7 @@ void Basic_Operations(void){
     printf("6.Factorial: \n");
     printf("7.Square Root: \n");
     printf("Choose one operation: ");
-    if((scanf("%d", &Basic_choice)) < 1){
+    if((scanf("%d", &Basic_choice)) == 0){
         printf("Inavlid Operation!!!!");  //same as before (just handling user input errors)
         exit(0);
     }
@@ -172,8 +173,9 @@ void Advanced_Calculations(){
     printf("1.Unit Conversion: \n");
     printf("2.Palindrome: \n");
     printf("3.Fibonacci: \n");;
+    printf("4.Logarithm: \n");
     printf("Choose one operation: ");
-    if((scanf("%d", &Advance_Call)) < 1){
+    if((scanf("%d", &Advance_Call)) == 0){
         fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
         exit(0);
     }
@@ -190,6 +192,11 @@ void Advanced_Calculations(){
 
         case 3:{
             Print_Fibonacci();
+            break;
+        }
+
+        case 4:{
+            Logarithmic_Functions();
             break;
         }
 
@@ -250,12 +257,12 @@ void Trigonometry(){
     printf("2.Cosine\n");
     printf("3.Tangent\n");
     printf("Enter your choice: ");
-    scanf("%d", &choice);
-    printf("Enter your angle: ");
-    if((scanf("%d", &choice)) < 1){
+    if((scanf("%d", &choice)) == 0){
         fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
         exit(0);
     }
+    printf("Enter your angle: ");
+    scanf("%lf", &angle);
     switch(choice){
         case 1:{
             result = sin(to_radians(angle));
@@ -299,7 +306,7 @@ void Unit_Conversion(void){
     printf("2. Weight\n");
     printf("3. Temperature\n");
     printf("Enter your choice: ");
-    if((scanf("%d", &choice)) < 1){
+    if((scanf("%d", &choice)) == 0){
         fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
         exit(0);
     }
@@ -431,20 +438,59 @@ void Print_Fibonacci(void){
 }
 //to print fibonacci numbers
 void fib(int num){
-    int num1 = 0;
-    int num2 = 1;
-    for(int i = 0; i <= num; i++){
-    if(i >2){
-    int current = num1 + num2; 
-    num1 = num2;
-    num2 = current;
-    printf("%d\t", current);
+    int num1 = 0, num2 = 1, current;
+    printf("%d\t%d\t", num1, num2);
+    for(int i = 2; i < num; i++){
+        current = num1 + num2;
+        printf("%d\t", current);
+        num1 = num2;
+        num2 = current;
     }
-    else if(i == 1){
-        printf("%d\t", num1);
+    printf("\n");
+}
+
+void Logarithmic_Functions(void){
+    int num, logn, base, choice;
+    printf("You can find the logarithm of any function here\n");
+    printf("1.base 10\n");
+    printf("2.base 2\n");
+    printf("3.Custom base\n");
+    printf("Enter your choice: ");
+    if((scanf("%d", &choice)) == 0){
+        fprintf(stderr, "Inavlid Operation!!!!"); //input error handling
+        exit(0);
     }
-    else if(i == 2){
-        printf("%d\t",num2);
+    if(choice < 3){
+        goto Here;
     }
+    else{
+    printf("Choose the custom base for log: ");
+    scanf("%d", &base);
+    }
+    Here:
+    printf("Enter a number: ");
+    scanf("%d", &num);
+    switch(choice){
+        case 1:{
+            logn = log10(num);  //find base 10 for number
+            printf("Log(%d) = %d\n", num, logn);
+            break;
+        }
+
+        case 2:{
+            logn = log2(num); //find base 2 for number
+            printf("Log(%d) = %d\n", num, logn);
+            break;
+        }
+
+        case 3:{
+            logn = log(num) / log(base);  //find the custom base
+            printf("Log(%d) = %d\n", num, logn);
+            break;
+        }
+        default:{
+            fprintf(stderr, "Invalid Operation!!! ");
+            exit(0);  //exits the while loop for invalid input
+        }
     }
 }
