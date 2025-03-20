@@ -5,25 +5,25 @@
 
 int PrintMenu();  //main menu for the UI
 //all the function prototypes here
-void Basic_Operations(void);
-void Trigonometric_Calculations(void);
-void Advanced_Calculations(void);
-void Sum(double, double);
-void Diff(double, double);
-void Mult(double, double);
-void Div(double, double);
+void basicOperations(void);
+void trigonometricCalculations(void);
+void advancedCalculations(void);
+void sumOperation(double, double);
+void differenceOperation(double, double);
+void mult(double, double);
+void divOperation(double, double);
 void power(double, int);
 void factorial(int);
-void SquareRoot(void);
-void Trigonometry(void);
+void squareRoot(void);
+void trigonometryCalc(void);
 double to_radians(double);
-void Unit_Conversion(void);
-void Length_Conversion(void);
-void Weight_Conversion(void);
-void Temp_Conversion(void);
-void Check_Palindrome(void);
-void Print_Fibonacci(void);
-void Logarithmic_Functions(void);
+void unitConversion(void);
+void lengthConversion(void);
+void weightConversion(void);
+void tempConversion(void);
+void checkPalindrome(void);
+void printFibonacci(void);
+void logarithmicFunctions(void);
 void fib(int);
 //these two for the Underline on the code & reseting it to normal
 #define RESET "\033[0m"
@@ -36,17 +36,17 @@ int main(){
     //switch statement for operator
     switch(operator){
         case 1:{
-            Basic_Operations(); //for basic calculations
+            basicOperations(); //for basic calculations
             break;
         }
 
         case 2:{
-            Trigonometric_Calculations();  //for trigonometric calculations
+            trigonometricCalculations();  //for trigonometric calculations
             break;
         }
 
         case 3:{
-            Advanced_Calculations();  //for advanced calculations
+            advancedCalculations();  //for advanced calculations
             break;
         }
 
@@ -85,7 +85,7 @@ int PrintMenu(){
 
     return choice;
 }
-void Basic_Operations(void){
+void basicOperations(void){
     int Basic_choice, power_call, facto_user;  //define power_call for power & facto_user to get factorial from user as an integer
     double operand1, operand2;
     printf("\t\t\t\t\tBASIC CALCULATION\n");
@@ -105,21 +105,21 @@ void Basic_Operations(void){
         case 1:{
             printf("Enter two numbers: ");
             scanf("%lf %lf", &operand1, &operand2);
-            Sum(operand1, operand2);
+            sumOperation(operand1, operand2);
             break;
         }
             //sum of two numbers
         case 2:{
             printf("Enter two numbers: ");
             scanf("%lf %lf", &operand1, &operand2);
-            Diff(operand1, operand2);
+            differenceOperation(operand1, operand2);
             break;
         }
             //difference of two numbers
         case 3:{
             printf("Enter two numbers: ");
             scanf("%lf %lf", &operand1, &operand2);
-            Mult(operand1, operand2);
+            mult(operand1, operand2);
             break;
         }
             //product of two numbers
@@ -127,7 +127,7 @@ void Basic_Operations(void){
             printf("Enter two numbers: ");
             scanf("%lf %lf", &operand1, &operand2);
             if(operand2 != 0){
-            Div(operand1, operand2);
+            divOperation(operand1, operand2);
             }
             //show error if second operand is 0
             else{
@@ -151,7 +151,7 @@ void Basic_Operations(void){
             break;
         }
         case 7:{
-            SquareRoot();
+            squareRoot();
             break;
         }
 
@@ -162,12 +162,12 @@ void Basic_Operations(void){
     }
 }
 //for trigonometric calculations
-void Trigonometric_Calculations(void){
+void trigonometricCalculations(void){
     printf("\t\t\t\t\tTRIGONOMETRIC CALCULATION\n");  //just some UI, not compulsory
-    Trigonometry();
+    trigonometryCalc();
 }
 
-void Advanced_Calculations(){
+void advancedCalculations(){
     int Advance_Call;  //for the user choice input
     printf("\t\t\t\t\tADVANCED CALCULATION\n"); //just some UI, not compulsory
     printf("1.Unit Conversion: \n");
@@ -181,22 +181,22 @@ void Advanced_Calculations(){
     }
     switch(Advance_Call){
         case 1:{
-            Unit_Conversion();
+            unitConversion();
             break;
         }
 
         case 2:{
-            Check_Palindrome();
+            checkPalindrome();
             break;
         }
 
         case 3:{
-            Print_Fibonacci();
+            printFibonacci();
             break;
         }
 
         case 4:{
-            Logarithmic_Functions();
+            logarithmicFunctions();
             break;
         }
 
@@ -207,19 +207,19 @@ void Advanced_Calculations(){
     }
 }
 //functions for each operator
-void Sum(double a, double b){
+void sumOperation(double a, double b){
     double Sum = a + b;
     printf("%.2lf + %.2lf = %.2lf", a, b, Sum);
 }
-void Diff(double a, double b){
+void differenceOperation(double a, double b){
     double diff = a - b;
     printf("%.2lf - %.2lf = %.2lf", a, b, diff);
 }
-void Mult(double a, double b){
+void mult(double a, double b){
     double mult = a * b;
     printf("%.2lf x %.2lf = %.2lf", a, b, mult);
 }
-void Div(double a, double b){
+void divOperation(double a, double b){
     double div = a / b;
     printf("%.2lf / %.2lf = %.2lf", a, b, div);
 }
@@ -240,7 +240,7 @@ void factorial(int a){
     printf("%d! = %.2lf\n", a, fact);  //prints the factorial
 }
 
-void SquareRoot(){
+void squareRoot(){
     int number;
     double result;
     printf("Enter a number: ");
@@ -249,7 +249,7 @@ void SquareRoot(){
     printf("Square Root of %d is: %.2lf", number, result);
 }
 
-void Trigonometry(){
+void trigonometryCalc(){
     int choice;
     double angle, result;
     printf("What type of Trigonometric Calculation do you want to do?\n");  //for some trigonometric calculations
@@ -298,7 +298,7 @@ double to_radians(double num){
     double fun_result = num * M_PI / 180;
     return fun_result;
 }
-void Unit_Conversion(void){
+void unitConversion(void){
     int choice;
 
     printf("Welcome to Unit Conversion: \nWhat type of unit conversion do you want to do?\n"); //unit conversion for the user
@@ -313,17 +313,17 @@ void Unit_Conversion(void){
 
     switch (choice){
         case 1:{
-            Length_Conversion();
+            lengthConversion();
             break;
         }
 
         case 2:{
-            Weight_Conversion();
+            weightConversion();
             break;
         }
 
         case 3:{
-            Temp_Conversion();
+            tempConversion();
             break;
         }
 
@@ -333,7 +333,7 @@ void Unit_Conversion(void){
     }
 }
 
-void Length_Conversion(void){
+void lengthConversion(void){
     int choice;
     double value;
     
@@ -357,7 +357,7 @@ void Length_Conversion(void){
     }
 }
 
-void Weight_Conversion(void){
+void weightConversion(void){
         int choice;
         double value;
         
@@ -376,7 +376,7 @@ void Weight_Conversion(void){
             default: printf("Invalid choice.\n");
         }
 }
-void Temp_Conversion(void){
+void tempConversion(void){
     int choice;
     double value;
     
@@ -396,7 +396,7 @@ void Temp_Conversion(void){
     }
 }
 //check if its palindrome.
-void Check_Palindrome(void){
+void checkPalindrome(void){
         int num, temp, reverse = 0;
 
         printf("Enter a number: ");
@@ -414,7 +414,7 @@ void Check_Palindrome(void){
         }
 }
 //to print fibonacci numbers till the user input
-void Print_Fibonacci(void){
+void printFibonacci(void){
         int num, fibo;
         Start:
         printf("Enter the Fibonacci print range: ");
@@ -449,7 +449,7 @@ void fib(int num){
     printf("\n");
 }
 
-void Logarithmic_Functions(void){
+void logarithmicFunctions(void){
     int num, logn, base, choice;
     printf("You can find the logarithm of any function here\n");
     printf("1.base 10\n");
