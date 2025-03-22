@@ -3,7 +3,7 @@
 #include <math.h>  //for advanced mathematic calculation
 #include <stdlib.h>  //for functions like exit(0)
 
-int PrintMenu();  //main menu for the UI
+int printMenu();  //main menu for the UI
 //all the function prototypes here
 void basicOperations(void);
 void trigonometricCalculations(void);
@@ -32,7 +32,7 @@ void fib(int);
 int main(){
     int operator = 1;
     while(1){
-    operator = PrintMenu(); //get the operator & print the menu
+    operator = printMenu(); //get the operator & print the menu
     //switch statement for operator
     switch(operator){
         case 1:{
@@ -69,7 +69,7 @@ int main(){
 }
 
 //function to print main menu
-int PrintMenu(){
+int printMenu(){
     int choice;
     printf(UNDERLINE"\n\t\t\t\t\tINTERMEDIATE LEVEL CALCULATOR\n");    //title
     printf("What do you wish to do?\n");
@@ -416,14 +416,12 @@ void checkPalindrome(void){
 //to print fibonacci numbers till the user input
 void printFibonacci(void){
         int num, fibo;
-        Start:
-        printf("Enter the Fibonacci print range: ");
-        scanf("%d", &num);
-        if(num < 1){
-            printf("Invalid number!!!\n");
-            goto Start;
+        do{
+            printf("Enter the Fibonacci print range: ");
+            scanf("%d", &num);
         }
-        else if(num == 1){
+        while(num < 1);
+        if(num == 1){
             printf("0");
         }
         else if(num == 2){

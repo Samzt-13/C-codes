@@ -89,6 +89,12 @@ int check_and_gen(int x){
              printf("Guess a number between 1 and 500\n");
              break;
             }
+        default:{
+                printf("Invalid game mode, using Normal mode\n");
+                number = rand() % 100 + 1;
+                printf("Guess a number between 1 and 100\n");
+                break;
+        }
     }
     return number;
 }

@@ -6,7 +6,7 @@ void menu(void);
 void newStudent(void);
 void displayStudents(void);
 void searchStudent(void);
-void updateMark(void);
+void updateStudent(void);
 void deleteStudent(void);
 #define UNDERLINE "\033[1;21m"   //ASCII Code for an underline
 #define RESET "\033[0m"   //ASCII Code to reset it to normal
@@ -14,13 +14,12 @@ void deleteStudent(void);
 typedef struct{
     char name[100];
     char surName[100];
-    int age;
-    int rollNO;
-    int marks[5];
+    int age, rollNO, number;
+    char course[50];
 } Student;
 //main function
 int main(){
-  while(1){   //while loop until you exit from it
+  while(1){  //while loop until you exit from it
   menu();
   }
   return 0; 
@@ -29,11 +28,11 @@ int main(){
 void menu(){
   int User_Choice;
   printf(UNDERLINE"\n\t\t\t\tSTUDENT GRADE MANAGEMENT\n");  //Just "Underline" for some good display
-  printf("------MAIN MENU\n");
+  printf("\n\n\t\t\t\t>>>-----MAIN MENU-----<<<\n");
   printf("1.Add New Student\n");
   printf("2.Display Students\n");
   printf("3.Search Student\n");
-  printf("4.Update Student Marks\n");
+  printf("4.Update Student\n");
   printf("5.Delete Student\n");
   printf("6.Exit\n");
   printf("Enter your choice: ");
@@ -57,7 +56,7 @@ void menu(){
     }
 
     case 4:{
-      updateMark();     //Function to update a student's marks
+      updateStudent();     //Function to update a student's marks
       break;
     }
 
@@ -82,6 +81,9 @@ void menu(){
 }
 
 void newStudent(void){
+  system("cls");
+  printf("\t\t\t:::NEW STUDENT:::");
+  printf("\n\n\n");
   Student S1;     //giving name to the struct
   FILE *Std;   //declaring the file
   Std = fopen("Student_Details.txt", "a");   //oprning the file in "append mode"
@@ -105,13 +107,13 @@ void newStudent(void){
     fprintf(stderr, "Invalid input provided!!!\n");
     exit(0);
   }
-  for(int i = 0; i < 5; i++){
-    printf("Enter his marks in Subject%d: ", i + 1);
-    if(scanf("%d", &S1.marks[i])== 0){
-      fprintf(stderr, "Invalid input provided!!!\n");
-      exit(0);
-    }
-  }     
+  printf("Enter his phone number: ");
+  if(scanf("%d", &S1.number) == 0){
+    fprintf(stderr, "Invalid input provided!!!\n");
+    exit(0);
+  }
+  printf("Enter his course name: ");
+  scanf("%s", S1.course);     
   if(fwrite(&S1, sizeof(Student), 1, Std) > 0){
     printf("Data Registered Successfully!\n");
   }
@@ -123,6 +125,8 @@ void newStudent(void){
 }
 
 void displayStudents(){
+  printf("\t\t\t:::STUDENT DISPLAY:::");
+  printf("\n\n\n");
   printf("\nStudent Details: \n");
   FILE *Std;
   Student S1;
@@ -133,18 +137,20 @@ void displayStudents(){
   else{
     while(feof(Std) == 0){     //while the end of the file has been reached
       if(fread(&S1, sizeof(Student), 1, Std) > 0){   //if the data we read from the file is not symbols
-        printf("Name: %s %s\nAge: %d\nRoll No: %d\n", S1.name, S1.surName, S1.age, S1.rollNO);    //printing details
-        for(int i = 0; i < 5; i++){
-          printf("Marks in Subject %d: %d\n", i + 1, S1.marks[i]);   //for loop as we havr to print marks in every subject
-        }
+        printf("\nName: %s %s\nAge: %d\nRoll No: %d\nPhone: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.number, S1.course);    //printing details
       }
+      printf("\n");
     }
   }
   fclose(Std);    //closing the file to avoid leaks
 }
 
 void searchStudent(void){
-  int rollNo, count = 0;   //rollNo for user input & count to see how many times the user input is equal to Student data
+  system("cls");
+  printf("\t\t\t:::STUDENT SEARCH:::");
+  printf("\n\n\n");
+  int count = 0;   //count to see how many times the user input is equal to Student data
+  char name[100]; 
   FILE *Std;
   Student S1;
   Std = fopen("Student_Details.txt", "r");   //opening the file in read mode
@@ -154,14 +160,11 @@ void searchStudent(void){
   else{
   printf("\nSTUDENT SEARCH!\n");    //search for student detail
   printf("Enter his Roll No: ");
-  if(scanf("%d", &rollNo) == 0){
-    fprintf(stderr, "Invalid input provided!!!\n");
-    exit(0);
-  }
+  scanf("%s", name);
   while(feof(Std) == 0){
     if(fread(&S1, sizeof(Student), 1, Std) > 0){
-      if(S1.rollNO == rollNo){
-        printf("Name: %s %s\nAge: %d\nRoll No: %d\n", S1.name, S1.surName, S1.age, S1.rollNO);
+      if((strcmp(S1.name, name)) == 0){
+        printf("Name: %s %s\nAge: %d\nRoll No: %d\nPhone Number: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.number, S1.course);
         count++;
       }
     }
@@ -173,9 +176,24 @@ void searchStudent(void){
   fclose(Std);
 }
 
-void updateMark(void){
-  printf("\nUpdate Student Marks!!!\n");
-  
+void updateStudent(void){
+  system("cls");
+  printf("\n\n\n");
+  char name[100];
+  FILE *Std;
+  Student S1;
+  Std = fopen("Student_Details.txt", "r+");
+  printf("\nUpdate Student Details!!!\n");
+  printf("Enter his name to proceed: \n");
+  scanf("%s", name);
+  while(feof(Std) == 0){
+    if(fread(&S1, sizeof(Student), 1, Std) > 0){
+      if((strcmp(S1.name, name)) == 0){
+          updMarks(&S1, Std);
+        }
+    }
+  }
+  fclose(Std);
 }
 
 void deleteStudent(void){
