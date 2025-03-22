@@ -180,6 +180,8 @@ void updateStudent(void){
   system("cls");
   printf("\n\n\n");
   char name[100];
+  char newName[100], surName[100], course[50];
+  int age, rollNo, phoneNumber;
   FILE *Std;
   Student S1;
   Std = fopen("Student_Details.txt", "r+");
@@ -189,7 +191,17 @@ void updateStudent(void){
   while(feof(Std) == 0){
     if(fread(&S1, sizeof(Student), 1, Std) > 0){
       if((strcmp(S1.name, name)) == 0){
-          updMarks(&S1, Std);
+          printf("Enter his new detail: ");
+          printf("FUll Name: ");
+          scanf("%s %s", newName, surName);
+          printf("Enter his new Age: ");
+          scanf("%d", &age);
+          printf("Enter his new Roll No: ");
+          scanf("%d", &rollNo);
+          printf("Enter his new Phone Number: ");
+          scanf("%d", &phoneNumber);
+          printf("Enter his new course: ");
+          scanf("%s", course);
         }
     }
   }
