@@ -29,15 +29,15 @@ void menu(){
   int User_Choice;
   printf(UNDERLINE"\n\t\t\t\tSTUDENT GRADE MANAGEMENT\n");  //Just "Underline" for some good display
   printf("\n\n\t\t\t\t>>>-----MAIN MENU-----<<<\n");
-  printf("1.Add New Student\n");
-  printf("2.Display Students\n");
-  printf("3.Search Student\n");
-  printf("4.Update Student\n");
-  printf("5.Delete Student\n");
-  printf("6.Exit\n");
-  printf("Enter your choice: ");
+  printf("1.Add New Student\n");     //ask to add a new student
+  printf("2.Display Students\n");     //ask to diplay a new student
+  printf("3.Search Student\n");       //ask to search a new student
+  printf("4.Update Student\n");       //ask to update a new student
+  printf("5.Delete Student\n");       //ask to delete a new student
+  printf("6.Exit\n");                 //exit the program
+  printf("Enter your choice: ");      
   if(scanf("%d", &User_Choice) == 0){
-      fprintf(stderr, "Error Input Provided!!!!");
+      fprintf(stderr, "Error Input Provided!!!!");      //error message if the input is not a number
   }
   switch(User_Choice){
     case 1:{
@@ -69,14 +69,14 @@ void menu(){
       printf("\n\n\nExiting the program!!\n");
       printf("Thanks for using it\n");
       printf("Developed by--Samrat Parajuli\n");
-      printf("\t\t\t\t\tEXIT\n");
+      printf("\t\t\t\t\tEXIT\n");    //just some design stuff
       printf(RESET);   //reset the color to normal 
-      exit(0);
+      exit(0);        //exit the loop
       break;
     }
 
     default:{
-        fprintf(stderr, "Error!!\nIvalid Input Provided!\n");
+        fprintf(stderr, "Error!!\nIvalid Input Provided!\n");   //invalid message on unexpected message
     }
   }
 }
@@ -87,48 +87,49 @@ void newStudent(void){
   printf("\n\n\n");
   Student S1;     //giving name to the struct
   FILE *Std;   //declaring the file
-  Std = fopen("Student_Details.txt", "a");   //oprning the file in "append mode"
+  Std = fopen("Student_Details.txt", "a");   //opening the file in "append mode"
   if(Std == NULL){
-    fprintf(stderr, "File Execution unsuccessfull!\n");
+    fprintf(stderr, "File Execution unsuccessfull!\n");  //error message
     return;
   }
   else{
+  Start:          //just for the goto function
   printf("New Student: \n");
-  printf("Enter his name: ");
+  printf("Enter his name: ");    //get student name
   scanf("%s", S1.name);
-  printf("Enter his surname: ");
+  printf("Enter his surname: ");      //get student surname
   scanf("%s", S1.surName);
-  printf("Enter his age: ");
+  printf("Enter his age: ");        //get student age
   if(scanf("%d", &S1.age) == 0){
-    fprintf(stderr, "Invalid input provided!!!\n");
-    exit(0);
+    fprintf(stderr, "Invalid input provided!!!\n");      //invalid message
+    goto Start;       //return to "Start" for the invalid input
   }
   printf("Enter his Roll No: ");
   if(scanf("%d", &S1.rollNO) == 0){
     fprintf(stderr, "Invalid input provided!!!\n");
-    exit(0);
+    goto Start;         //return to "Start" for the invalid input
   }
   printf("Enter his course name: ");
   scanf("%s", S1.course);     
   if(fwrite(&S1, sizeof(Student), 1, Std) > 0){
-    printf("Data Registered Successfully!\n");
+    printf("Data Registered Successfully!\n");    //data registered in file
   }
   else{
-    fprintf(stderr, "Data Registration Error!!!\n");
+    fprintf(stderr, "Data Registration Error!!!\n");      //data registration error
   }
   }
-  fclose(Std);
+  fclose(Std);        //close the file
 }
 
 void displayStudents(){
-  printf("\t\t\t:::STUDENT DISPLAY:::");
+  printf("\t\t\t:::STUDENT DISPLAY:::");   //system display
   printf("\n\n\n");
-  printf("\nStudent Details: \n");
+  printf("\nStudent Details: \n");      //Some info message for better User Interface
   FILE *Std;
   Student S1;
   Std = fopen("Student_Details.txt", "r");   //file opening in read mode
   if(Std == NULL){
-    fprintf(stderr, "File Open Error!!!\n");
+    fprintf(stderr, "File Open Error!!!\n");    //error message with "stderr" 
   }
   else{
     while(feof(Std) == 0){     //while the end of the file has been reached
@@ -159,17 +160,17 @@ void searchStudent(void){
   scanf("%s", name);
   while(feof(Std) == 0){
     if(fread(&S1, sizeof(Student), 1, Std) > 0){
-      if((strcmp(S1.name, name)) == 0){
+      if((strcmp(S1.name, name)) == 0){  //if the file is found, print it
         printf("Name: %s %s\nAge: %d\nRoll No: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.course);
         count++;
       }
     }
    }
    if(count < 1){
-      printf("Student Not Found!!!\n");
+      printf("Student Not Found!!!\n");   //error message on file not found
    }
   }
-  fclose(Std);
+  fclose(Std);      //close the file
 }
 
 void updateStudent(void){
@@ -177,77 +178,79 @@ void updateStudent(void){
   printf("\n\n\n");
   char name[100];
   int found = 0;
-  FILE *std;
-  Student S1;
+  FILE *std;      //open file
+  Student S1;     //declare struct
   std = fopen("Student_Details.txt", "r+");
   if(std == NULL){
-    fprintf(stderr, "File execution error");
+    fprintf(stderr, "File execution error");   //error message on file error
   }
   printf("\nUpdate Student Details!!!\n");
   printf("Enter his name to proceed: \n");
-  scanf("%s", name);
+  scanf("%s", name);    //get the student name to update
   while(feof(std) == 0){
     if(fread(&S1, sizeof(Student), 1, std) > 0){
-      if((strcmp(S1.name, name)) == 0){
+      if((strcmp(S1.name, name)) == 0){   //if the data is found, edit it.
           printf("Enter his new detail: ");
           printf("FUll Name: ");
-          scanf("%s %s", S1.name, S1.surName);
+          scanf("%s %s", S1.name, S1.surName);        //edit student info
           printf("Enter his new Age: ");
           scanf("%d", &S1.age);
           printf("Enter his new Roll No: ");
           scanf("%d", &S1.rollNO);
           printf("Enter his new course: ");
           scanf("%s", S1.course);
-          fseek(std, -sizeof(Student), SEEK_CUR);
-          fwrite(&S1, sizeof(Student), 1, std);
-          fflush(std);
+          fseek(std, -sizeof(Student), SEEK_CUR);    //move the file pointer back
+          fwrite(&S1, sizeof(Student), 1, std);         //overwrite the file details in std
+          fflush(std);    //Ensure file changes
           found++;
         }
     }
   }
   if(!found){
-    printf("Student not found\n");
+    printf("Student not found\n");    //error if file is not found
   }
-  fclose(std);
+  else{
   printf("File Update Sucessfull");
+  }
+  fclose(std);   //close the file
 }
 
 void deleteStudent(void){
-  system("cls");
-  printf("\n\n\n\n");
-  char name[100];
+  system("cls");    //system function to clear screen
+  printf("\n\n\n\n");    //print new lines for better UI
+  char name[100];         
   int found = 0;
-  FILE *std, *temp;
-  Student S1;
-  std = fopen("Student_Details.txt", "r+");
-  temp = fopen("Temp.txt", "a");
+  FILE *std, *temp;       //file declaration
+  Student S1;     //struct declaration
+  std = fopen("Student_Details.txt", "r+");     //open std in "r+" to both read & write
+  temp = fopen("Temp.txt", "a");          //open temp in append mode
   if(std == NULL || temp == NULL){
-    fprintf(stderr, "\nFile Execution Error!!!!\n");
+    fprintf(stderr, "\nFile Execution Error!!!!\n");      //show error if anyof them doesnot open
   }
   printf("\t\t\t\tDELETE STUDENT\n");
   printf("Enter student name: ");
-  scanf("%s", name);
+  scanf("%s", name);      //get the student name
   while(feof(std) == 0){
-    if(fread(&S1, sizeof(Student), 1, std) > 0){
-      if(strcmp(name, S1.name) == 0){
-        found++;
+    if(fread(&S1, sizeof(Student), 1, std) > 0){   //find the student
+      if(strcmp(name, S1.name) == 0){  
+        found++;      //if found do not do anything
       }
       else{
-        fwrite(&S1, sizeof(Student), 1, temp);
+        fwrite(&S1, sizeof(Student), 1, temp);    //if its not that student then write it into temp
       }
     }
   }
 
-  fclose(std);
+  fclose(std);      //close both files
   fclose(temp);
 
-  if(found){
-    remove("Student_Details.txt");
-    rename("temp.txt", "Student_Details.txt");
-    printf("Student Data Deleted!!");
+  if(found){   //if the detail was found
+    remove("Student_Details.txt");      //remove original
+    rename("temp.txt", "Student_Details.txt");    //rename temp as "Student_Details.txt"
+    printf("Student Data Deleted!!");         //print it was found
   }
   else{
-    printf("Student Not Found!!!");
-    remove("Temp.txt");
+    printf("Student Not Found!!!");     //if not found
+    remove("Temp.txt");     //remove temp
   }
 }
