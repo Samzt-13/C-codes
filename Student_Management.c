@@ -14,8 +14,7 @@ void deleteStudent(void);
 typedef struct{
     char name[100];
     char surName[100];
-    int age, rollNO, number;
-
+    int age, rollNO;
     char course[50];
 } Student;
 //main function
@@ -67,9 +66,10 @@ void menu(){
     }
 
     case 6:{
-      printf("Exiting the program!!\n");
-      printf("Thanks for using it");
-      printf("Developed by --Samrat Parajuli");
+      printf("\n\n\nExiting the program!!\n");
+      printf("Thanks for using it\n");
+      printf("Developed by--Samrat Parajuli\n");
+      printf("\t\t\t\t\tEXIT\n");
       printf(RESET);   //reset the color to normal 
       exit(0);
       break;
@@ -108,11 +108,6 @@ void newStudent(void){
     fprintf(stderr, "Invalid input provided!!!\n");
     exit(0);
   }
-  printf("Enter his phone number: ");
-  if(scanf("%d", &S1.number) == 0){
-    fprintf(stderr, "Invalid input provided!!!\n");
-    exit(0);
-  }
   printf("Enter his course name: ");
   scanf("%s", S1.course);     
   if(fwrite(&S1, sizeof(Student), 1, Std) > 0){
@@ -138,7 +133,7 @@ void displayStudents(){
   else{
     while(feof(Std) == 0){     //while the end of the file has been reached
       if(fread(&S1, sizeof(Student), 1, Std) > 0){   //if the data we read from the file is not symbols
-        printf("\nName: %s %s\nAge: %d\nRoll No: %d\nPhone: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.number, S1.course);    //printing details
+        printf("\nName: %s %s\nAge: %d\nRoll No: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.course);    //printing details
       }
       printf("\n");
     }
@@ -165,7 +160,7 @@ void searchStudent(void){
   while(feof(Std) == 0){
     if(fread(&S1, sizeof(Student), 1, Std) > 0){
       if((strcmp(S1.name, name)) == 0){
-        printf("Name: %s %s\nAge: %d\nRoll No: %d\nPhone Number: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.number, S1.course);
+        printf("Name: %s %s\nAge: %d\nRoll No: %d\nCourse: %s\n", S1.name, S1.surName, S1.age, S1.rollNO, S1.course);
         count++;
       }
     }
@@ -201,8 +196,6 @@ void updateStudent(void){
           scanf("%d", &S1.age);
           printf("Enter his new Roll No: ");
           scanf("%d", &S1.rollNO);
-          printf("Enter his new Phone Number: ");
-          scanf("%d", &S1.number);
           printf("Enter his new course: ");
           scanf("%s", S1.course);
           fseek(std, -sizeof(Student), SEEK_CUR);
@@ -220,5 +213,41 @@ void updateStudent(void){
 }
 
 void deleteStudent(void){
-  printf("Delete Students info here: ");
+  system("cls");
+  printf("\n\n\n\n");
+  char name[100];
+  int found = 0;
+  FILE *std, *temp;
+  Student S1;
+  std = fopen("Student_Details.txt", "r+");
+  temp = fopen("Temp.txt", "a");
+  if(std == NULL || temp == NULL){
+    fprintf(stderr, "\nFile Execution Error!!!!\n");
+  }
+  printf("\t\t\t\tDELETE STUDENT\n");
+  printf("Enter student name: ");
+  scanf("%s", name);
+  while(feof(std) == 0){
+    if(fread(&S1, sizeof(Student), 1, std) > 0){
+      if(strcmp(name, S1.name) == 0){
+        found++;
+      }
+      else{
+        fwrite(&S1, sizeof(Student), 1, temp);
+      }
+    }
+  }
+
+  fclose(std);
+  fclose(temp);
+
+  if(found){
+    remove("Student_Details.txt");
+    rename("temp.txt", "Student_Details.txt");
+    printf("Student Data Deleted!!");
+  }
+  else{
+    printf("Student Not Found!!!");
+    remove("Temp.txt");
+  }
 }
