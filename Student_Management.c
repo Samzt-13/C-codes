@@ -15,6 +15,7 @@ typedef struct{
     char name[100];
     char surName[100];
     int age, rollNO, number;
+
     char course[50];
 } Student;
 //main function
@@ -159,7 +160,7 @@ void searchStudent(void){
   }
   else{
   printf("\nSTUDENT SEARCH!\n");    //search for student detail
-  printf("Enter his Roll No: ");
+  printf("Enter his name: ");
   scanf("%s", name);
   while(feof(Std) == 0){
     if(fread(&S1, sizeof(Student), 1, Std) > 0){
@@ -180,32 +181,42 @@ void updateStudent(void){
   system("cls");
   printf("\n\n\n");
   char name[100];
-  char newName[100], surName[100], course[50];
-  int age, rollNo, phoneNumber;
-  FILE *Std;
+  int found = 0;
+  FILE *std;
   Student S1;
-  Std = fopen("Student_Details.txt", "r+");
+  std = fopen("Student_Details.txt", "r+");
+  if(std == NULL){
+    fprintf(stderr, "File execution error");
+  }
   printf("\nUpdate Student Details!!!\n");
   printf("Enter his name to proceed: \n");
   scanf("%s", name);
-  while(feof(Std) == 0){
-    if(fread(&S1, sizeof(Student), 1, Std) > 0){
+  while(feof(std) == 0){
+    if(fread(&S1, sizeof(Student), 1, std) > 0){
       if((strcmp(S1.name, name)) == 0){
           printf("Enter his new detail: ");
           printf("FUll Name: ");
-          scanf("%s %s", newName, surName);
+          scanf("%s %s", S1.name, S1.surName);
           printf("Enter his new Age: ");
-          scanf("%d", &age);
+          scanf("%d", &S1.age);
           printf("Enter his new Roll No: ");
-          scanf("%d", &rollNo);
+          scanf("%d", &S1.rollNO);
           printf("Enter his new Phone Number: ");
-          scanf("%d", &phoneNumber);
+          scanf("%d", &S1.number);
           printf("Enter his new course: ");
-          scanf("%s", course);
+          scanf("%s", S1.course);
+          fseek(std, -sizeof(Student), SEEK_CUR);
+          fwrite(&S1, sizeof(Student), 1, std);
+          fflush(std);
+          found++;
         }
     }
   }
-  fclose(Std);
+  if(!found){
+    printf("Student not found\n");
+  }
+  fclose(std);
+  printf("File Update Sucessfull");
 }
 
 void deleteStudent(void){
