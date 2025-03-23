@@ -27,7 +27,7 @@ int main(){
 //print the menu & use switch for user wished functions
 void menu(){
   int User_Choice;
-  printf(UNDERLINE"\n\t\t\t\tSTUDENT GRADE MANAGEMENT\n");  //Just "Underline" for some good display
+  printf(UNDERLINE"\n\t\t\t\tSTUDENT DATA MANAGEMENT\n");  //Just "Underline" for some good display
   printf("\n\n\t\t\t\t>>>-----MAIN MENU-----<<<\n");
   printf("1.Add New Student\n");     //ask to add a new student
   printf("2.Display Students\n");     //ask to diplay a new student
